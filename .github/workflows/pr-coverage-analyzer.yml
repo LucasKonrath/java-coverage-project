@@ -51,48 +51,6 @@ jobs:
           source .venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Convert JaCoCo to Cobertura format
-        run: |
-          python3 -c "
-          import xml.etree.ElementTree as ET
-          import sys
-          
-          # Read JaCoCo XML
-          tree = ET.parse('${{ github.workspace }}/target/site/jacoco/jacoco.xml')
-          root = tree.getroot()
-          
-          # Create Cobertura XML structure
-          coverage = ET.Element('coverage')
-          coverage.set('line-rate', '0.0')
-          coverage.set('branch-rate', '0.0')
-          coverage.set('version', '1.0')
-          coverage.set('timestamp', '0')
-          
-          packages = ET.SubElement(coverage, 'packages')
-          
-          for package in root.findall('.//package'):
-              pkg = ET.SubElement(packages, 'package')
-              pkg.set('name', package.get('name', ''))
-              pkg.set('line-rate', '0.0')
-              pkg.set('branch-rate', '0.0')
-              
-              classes = ET.SubElement(pkg, 'classes')
-              
-              for cls in package.findall('.//class'):
-                  cl = ET.SubElement(classes, 'class')
-                  cl.set('name', cls.get('name', ''))
-                  cl.set('filename', cls.get('sourcefilename', ''))
-                  cl.set('line-rate', '0.0')
-                  cl.set('branch-rate', '0.0')
-                  
-                  methods = ET.SubElement(cl, 'methods')
-                  lines = ET.SubElement(cl, 'lines')
-          
-          # Write Cobertura XML
-          cobertura_tree = ET.ElementTree(coverage)
-          cobertura_tree.write('${{ github.workspace }}/target/site/jacoco/cobertura.xml', encoding='utf-8', xml_declaration=True)
-          "
-
       - name: Configure environment variables
         run: |
           echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> pr-coverage-analyzer/.env
@@ -109,4 +67,4 @@ jobs:
         run: |
           cd pr-coverage-analyzer
           source .venv/bin/activate
-          python -m src.main --source-root src/main/java --repo-url "${{ github.repository }}" --pr-number 1 --coverage-report ${{ github.workspace }}/target/site/jacoco/cobertura.xml
+          python -m src.main --repo-url "${{ github.repository }}" --pr-number 1 --coverage-report ${{ github.workspace }}/target/site/jacoco/jacoco.xml

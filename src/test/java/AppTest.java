@@ -6,6 +6,6 @@ public class AppTest {
     @Test
     public void testNothing() {
         // This test does nothing
-        // Commit to run gh ACTION again
+        // Commit to run gh ACTION again and again
     }
 }

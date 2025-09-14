@@ -62,3 +62,4 @@ jobs:
           cd pr-coverage-analyzer
           source .venv/bin/activate
           python -m src.main --repo-url "${{ github.repository }}" --pr-number "${{ github.event.pull_request.number }}"
+          python -m src.main --repo-url "${{ github.repository }}" --pr-number 1 --coverage-report target/site/jacoco/jacoco.xml

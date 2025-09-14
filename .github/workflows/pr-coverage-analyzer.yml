@@ -59,7 +59,7 @@ jobs:
 
       - name: Configure environment variables
         run: |
-          echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> pr-coverage-analyzer/.env
+          echo "GITHUB_TOKEN=${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}" >> pr-coverage-analyzer/.env
           echo "LLM_PROVIDER=claude" >> pr-coverage-analyzer/.env
           echo "ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" >> pr-coverage-analyzer/.env
           echo "LLM_MODEL=claude-3-5-sonnet-20241022" >> pr-coverage-analyzer/.env

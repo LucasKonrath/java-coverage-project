@@ -103,6 +103,7 @@ jobs:
           echo "MIN_COVERAGE_INCREASE=5" >> pr-coverage-analyzer/.env
           echo "LOG_LEVEL=INFO" >> pr-coverage-analyzer/.env
           echo "LOCAL_MODE=false" >> pr-coverage-analyzer/.env
+          echo "SOURCE_ROOT=src/main/java" >> pr-coverage-analyzer/.env
 
       - name: Run PR Coverage Analyzer
         run: |

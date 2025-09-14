@@ -109,4 +109,4 @@ jobs:
         run: |
           cd pr-coverage-analyzer
           source .venv/bin/activate
-          python -m src.main --repo-url "${{ github.repository }}" --pr-number 1 --coverage-report ${{ github.workspace }}/target/site/jacoco/cobertura.xml
+          python -m src.main --source-root src/main/java --repo-url "${{ github.repository }}" --pr-number 1 --coverage-report ${{ github.workspace }}/target/site/jacoco/cobertura.xml

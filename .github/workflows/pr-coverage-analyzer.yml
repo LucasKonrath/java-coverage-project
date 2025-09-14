@@ -9,6 +9,9 @@ on:
 jobs:
   coverage-analyze:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout Java project
         uses: actions/checkout@v4

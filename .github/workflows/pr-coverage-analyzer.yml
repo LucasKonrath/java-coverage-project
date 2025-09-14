@@ -1,0 +1,64 @@
+name: PR Coverage Analyzer
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  coverage-analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Java project
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build and test with Maven (JaCoCo)
+        run: mvn clean test
+
+      - name: Upload JaCoCo coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: target/site/jacoco/jacoco.xml
+
+      - name: Checkout PR Coverage Analyzer
+        uses: actions/checkout@v4
+        with:
+          repository: LucasKonrath/sentry
+          path: pr-coverage-analyzer
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          cd pr-coverage-analyzer
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Configure environment variables
+        run: |
+          echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> pr-coverage-analyzer/.env
+          echo "LLM_PROVIDER=claude" >> pr-coverage-analyzer/.env
+          echo "ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" >> pr-coverage-analyzer/.env
+          echo "LLM_MODEL=claude-3-5-sonnet-20241022" >> pr-coverage-analyzer/.env
+          echo "COVERAGE_THRESHOLD=80" >> pr-coverage-analyzer/.env
+          echo "MIN_COVERAGE_INCREASE=5" >> pr-coverage-analyzer/.env
+          echo "LOG_LEVEL=INFO" >> pr-coverage-analyzer/.env
+          echo "LOCAL_MODE=false" >> pr-coverage-analyzer/.env
+
+      - name: Run PR Coverage Analyzer
+        run: |
+          cd pr-coverage-analyzer
+          source .venv/bin/activate
+          python -m src.main --repo-url "${{ github.repository }}" --pr-number "${{ github.event.pull_request.number }}"

@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: target/site/jacoco/jacoco.xml
+          path: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
 
       - name: Checkout PR Coverage Analyzer
         uses: actions/checkout@v4
@@ -61,5 +61,4 @@ jobs:
         run: |
           cd pr-coverage-analyzer
           source .venv/bin/activate
-          python -m src.main --repo-url "${{ github.repository }}" --pr-number "${{ github.event.pull_request.number }}"
-          python -m src.main --repo-url "${{ github.repository }}" --pr-number 1 --coverage-report target/site/jacoco/jacoco.xml
+          python -m src.main --repo-url "${{ github.repository }}" --pr-number 1 --coverage-report ${{ github.workspace }}/target/site/jacoco/jacoco.xml

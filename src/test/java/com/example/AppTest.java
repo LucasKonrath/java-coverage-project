@@ -25,7 +25,7 @@ public class AppTest {
     void testMainMethodOutput() {
         // Call the main method
         String[] args = new String[0];
-        App.main(args);
+        com.example.App.main(args);
 
         // Verify the output
         assertEquals("Hello, Cobertura!\n", outContent.toString());
@@ -35,7 +35,7 @@ public class AppTest {
     void testMainMethodWithArguments() {
         // Test with some command line arguments
         String[] args = {"arg1", "arg2"};
-        App.main(args);
+        com.example.App.main(args);
 
         // Verify the output is the same regardless of arguments
         assertEquals("Hello, Cobertura!\n", outContent.toString());

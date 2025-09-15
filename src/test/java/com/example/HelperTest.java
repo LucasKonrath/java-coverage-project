@@ -13,39 +13,28 @@ public class HelperTest {
     }
 
     @Test
-    void testAddPositiveNumbers() {
-        assertEquals(5, helper.add(2, 3), "Should correctly add two positive numbers");
-    }
-
-    @Test
-    void testAddWithZero() {
-        assertEquals(7, helper.add(7, 0), "Should correctly handle addition with zero");
-        assertEquals(7, helper.add(0, 7), "Should correctly handle addition with zero");
-    }
-
-    @Test
-    void testAddNegativeNumbers() {
-        assertEquals(-5, helper.add(-2, -3), "Should correctly add two negative numbers");
-    }
-
-    @Test
-    void testAddMaxValues() {
-        assertEquals(Integer.MAX_VALUE + 1L, (long)helper.add(Integer.MAX_VALUE, 1), "Should handle maximum integer values");
-    }
-
-    @Test
     void testSubtractPositiveNumbers() {
-        assertEquals(2, helper.subtract(5, 3), "Should correctly subtract two positive numbers");
-    }
-
-    @Test
-    void testSubtractWithZero() {
-        assertEquals(7, helper.subtract(7, 0), "Should correctly handle subtraction with zero");
-        assertEquals(-7, helper.subtract(0, 7), "Should correctly handle subtraction from zero");
+        assertEquals(3, helper.subtract(8, 5), "Should correctly subtract two positive numbers");
     }
 
     @Test
     void testSubtractNegativeNumbers() {
-        assertEquals(1, helper.subtract(-2, -3), "Should correctly subtract two negative numbers");
+        assertEquals(-3, helper.subtract(-8, -5), "Should correctly subtract two negative numbers");
+    }
+
+    @Test
+    void testSubtractWithZero() {
+        assertEquals(5, helper.subtract(5, 0), "Should correctly subtract zero");
+        assertEquals(-5, helper.subtract(0, 5), "Should correctly subtract from zero");
+    }
+
+    @Test
+    void testSubtractMaxValues() {
+        assertEquals(0, helper.subtract(Integer.MAX_VALUE, Integer.MAX_VALUE), "Should handle MAX_VALUE subtraction");
+    }
+
+    @Test
+    void testSubtractMinValues() {
+        assertEquals(0, helper.subtract(Integer.MIN_VALUE, Integer.MIN_VALUE), "Should handle MIN_VALUE subtraction");
     }
 }

@@ -60,9 +60,9 @@ jobs:
       - name: Configure environment variables
         run: |
           echo "GITHUB_TOKEN=${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}" >> pr-coverage-analyzer/.env
-          echo "LLM_PROVIDER=claude" >> pr-coverage-analyzer/.env
+          echo "LLM_PROVIDER=openai" >> pr-coverage-analyzer/.env
           echo "ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" >> pr-coverage-analyzer/.env
-          echo "LLM_MODEL=o3-mini" >> pr-coverage-analyzer/.env
+          echo "LLM_MODEL=gpt-3.5-turbo" >> pr-coverage-analyzer/.env
           echo "COVERAGE_THRESHOLD=80" >> pr-coverage-analyzer/.env
           echo "MIN_COVERAGE_INCREASE=5" >> pr-coverage-analyzer/.env
           echo "LOG_LEVEL=INFO" >> pr-coverage-analyzer/.env
